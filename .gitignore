@@ -1,0 +1,11 @@
+# Python venv
+venv/
+
+# キャッシュとか一時ファイルも無視しておくと便利
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# macOSの余計なファイル
+.DS_Store
