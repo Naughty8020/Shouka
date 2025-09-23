@@ -1,0 +1,66 @@
+# view.py
+from PySide6.QtWidgets import (
+    QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
+    QPushButton, QTextEdit, QLabel, QComboBox, QScrollArea
+)
+from PySide6.QtGui import QPixmap
+
+class PPTView(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Shouka PPT AI Helper")
+        self.setGeometry(200, 200, 1200, 700)
+
+        self.slide_index = 0
+        self.slides_pix = []
+
+        main_widget = QWidget()
+        self.setCentralWidget(main_widget)
+        layout = QHBoxLayout(main_widget)
+
+        # 左
+        left_layout = QVBoxLayout()
+        self.open_btn = QPushButton("📂資料をSHOUKAさせる")
+        self.ppt_path_label = QLabel("資料のパス: なし")
+        self.input_text = QTextEdit()
+        self.save_btn = QPushButton("💾SHOUKAした資料を出力・作成")
+        self.open_in_app_btn = QPushButton("💻資料をで開く・確認")
+        self.view_box = QComboBox()
+        self.view_box.addItems(["元のPPT", "編集後PPT"])
+        self.slide_label = QLabel()
+        self.slide_label.setFixedHeight(300)
+        self.scroll = QScrollArea()
+        self.scroll.setWidgetResizable(True)
+        self.scroll.setWidget(self.slide_label)
+
+        left_layout.addWidget(self.open_btn)
+        left_layout.addWidget(self.ppt_path_label)
+        left_layout.addWidget(QLabel("テキスト"))
+        left_layout.addWidget(self.input_text)
+        left_layout.addWidget(self.save_btn)
+        left_layout.addWidget(self.open_in_app_btn)
+        left_layout.addWidget(QLabel("表示PPT選択"))
+        left_layout.addWidget(self.view_box)
+
+        # 中央
+        center_layout = QVBoxLayout()
+        self.mode_box = QComboBox()
+        self.mode_box.addItems(["翻訳", "トーンアップ"])
+        self.engine_box = QComboBox()
+        self.engine_box.addItems(["クラウドAI", "ローカルAI"])
+        self.run_btn = QPushButton("🚀 実行")
+        center_layout.addWidget(QLabel("モード選択"))
+        center_layout.addWidget(self.mode_box)
+        center_layout.addWidget(QLabel("AI エンジン"))
+        center_layout.addWidget(self.engine_box)
+        center_layout.addWidget(self.run_btn)
+
+        # 右
+        right_layout = QVBoxLayout()
+        self.output_text = QTextEdit()
+        right_layout.addWidget(QLabel("SHOUKA結果"))
+        right_layout.addWidget(self.output_text)
+
+        layout.addLayout(left_layout, 4)
+        layout.addLayout(center_layout, 1)
+        layout.addLayout(right_layout, 4)
