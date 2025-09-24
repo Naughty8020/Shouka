@@ -34,3 +34,5 @@ Model: データとロジック（例：DB操作、計算など）
 View: UI部分（例：GUI、HTML、出力結果）
 
 Controller: ユーザー操作の処理（例：クリック、コマンド実行など）
+
+python main.py
