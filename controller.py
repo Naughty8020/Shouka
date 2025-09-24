@@ -3,12 +3,14 @@ import sys, os, subprocess
 from PySide6.QtGui import QPixmap
 from model import PPTModel
 from utils.converter import convert_ppt_to_images
+from translator import TranslatorModel   # ← 追加
 
 class PPTController:
     def __init__(self, view):
         self.view = view
         self.model = None
         self.edited_ppt_path = None
+        self.translator = TranslatorModel()   # ← 翻訳モデルを初期化
 
         # イベント接続
         view.open_btn.clicked.connect(self.load_ppt)
@@ -41,8 +43,14 @@ class PPTController:
         input_text = self.view.input_text.toPlainText()
         mode = self.view.mode_box.currentText()
         engine = self.view.engine_box.currentText()
-        result = f"[{engine}] {mode} 処理結果：\n\n" + input_text.upper()
-        self.view.output_text.setText(result)
+
+        if mode == "翻訳":
+            result = self.translator.translate_text(input_text)
+            self.view.output_text.setText(result)
+        else:
+            # デモ用ダミー処理
+            result = f"[{engine}] {mode} 処理結果：\n\n" + input_text.upper()
+            self.view.output_text.setText(result)
 
     def open_in_app(self):
         if self.view.view_box.currentText() == "編集後PPT" and self.edited_ppt_path:
