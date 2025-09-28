@@ -1,7 +1,5 @@
-# view.py
 from PySide6.QtWidgets import (
-    QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
-    QPushButton, QTextEdit, QLabel, QComboBox, QFileDialog
+    QMainWindow, QWidget, QVBoxLayout, QPushButton, QTextEdit, QLabel, QComboBox
 )
 
 class PPTView(QMainWindow):
@@ -18,6 +16,11 @@ class PPTView(QMainWindow):
         self.translate_btn = QPushButton("🚀 翻訳")
         self.save_btn = QPushButton("💾 保存")
 
+        # 元/翻訳後PPTを開くためのComboBox
+        self.view_box = QComboBox()
+        self.view_box.addItems(["元のPPT", "翻訳後PPT"])
+        self.open_in_app_btn = QPushButton("💻 選択したPPTを開く")
+
         layout = QVBoxLayout()
         layout.addWidget(self.model_path_label)
         layout.addWidget(QLabel("スライド選択"))
@@ -28,6 +31,8 @@ class PPTView(QMainWindow):
         layout.addWidget(QLabel("翻訳結果"))
         layout.addWidget(self.output_text)
         layout.addWidget(self.save_btn)
+        layout.addWidget(self.view_box)
+        layout.addWidget(self.open_in_app_btn)
         layout.addWidget(self.open_btn)
 
         container = QWidget()
