@@ -1,5 +1,7 @@
 # Shouka
 pip install -r requirements.txt
+# 仮想環境に入っている状態で
+pip freeze > requirements.txt
 
 ▶️ 【1】Windows の場合
 
