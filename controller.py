@@ -1,16 +1,15 @@
-# controller.py
 import sys, os, subprocess
 from PySide6.QtGui import QPixmap
 from model import PPTModel
 from utils.converter import convert_ppt_to_images
-from translator import TranslatorModel   # ← 追加
+from translator import TranslatorModel
 
 class PPTController:
     def __init__(self, view):
         self.view = view
         self.model = None
         self.edited_ppt_path = None
-        self.translator = TranslatorModel()   # ← 翻訳モデルを初期化
+        self.translator = TranslatorModel(src_lang="ja", tgt_lang="en")  # デフォ: 日本語→英語
 
         # イベント接続
         view.open_btn.clicked.connect(self.load_ppt)
@@ -42,13 +41,20 @@ class PPTController:
     def run_ai(self):
         input_text = self.view.input_text.toPlainText()
         mode = self.view.mode_box.currentText()
-        engine = self.view.engine_box.currentText()
 
         if mode == "翻訳":
+            # UIで翻訳方向を取得（例: "日本語→英語" or "英語→日本語"）
+            lang_mode = self.view.lang_box.currentText()
+            if lang_mode == "日本語→英語":
+                self.translator.set_languages("ja", "en")
+            else:
+                self.translator.set_languages("en", "ja")
+
             result = self.translator.translate_text(input_text)
             self.view.output_text.setText(result)
         else:
             # デモ用ダミー処理
+            engine = self.view.engine_box.currentText()
             result = f"[{engine}] {mode} 処理結果：\n\n" + input_text.upper()
             self.view.output_text.setText(result)
 

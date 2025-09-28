@@ -33,6 +33,10 @@ class PPTView(QMainWindow):
         self.scroll.setWidgetResizable(True)
         self.scroll.setWidget(self.slide_label)
 
+        # 翻訳方向追加
+        self.lang_box = QComboBox()
+        self.lang_box.addItems(["日本語→英語", "英語→日本語"])
+
         left_layout.addWidget(self.open_btn)
         left_layout.addWidget(self.ppt_path_label)
         left_layout.addWidget(QLabel("テキスト"))
@@ -41,6 +45,8 @@ class PPTView(QMainWindow):
         left_layout.addWidget(self.open_in_app_btn)
         left_layout.addWidget(QLabel("表示PPT選択"))
         left_layout.addWidget(self.view_box)
+        left_layout.addWidget(QLabel("翻訳方向"))  # 追加
+        left_layout.addWidget(self.lang_box)       # 追加
 
         # 中央
         center_layout = QVBoxLayout()
