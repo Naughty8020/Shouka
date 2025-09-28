@@ -1,16 +1,13 @@
-# view.py
 from PySide6.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QPushButton, QTextEdit, QLabel, QComboBox, QScrollArea
 )
-from PySide6.QtGui import QPixmap
 
 class PPTView(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Shouka PPT AI Helper")
         self.setGeometry(200, 200, 1200, 700)
-
         self.slide_index = 0
         self.slides_pix = []
 
@@ -24,7 +21,7 @@ class PPTView(QMainWindow):
         self.ppt_path_label = QLabel("資料のパス: なし")
         self.input_text = QTextEdit()
         self.save_btn = QPushButton("💾SHOUKAした資料を出力・作成")
-        self.open_in_app_btn = QPushButton("💻資料をで開く・確認")
+        self.open_in_app_btn = QPushButton("💻資料を開く・確認")
         self.view_box = QComboBox()
         self.view_box.addItems(["元のPPT", "編集後PPT"])
         self.slide_label = QLabel()
@@ -32,8 +29,6 @@ class PPTView(QMainWindow):
         self.scroll = QScrollArea()
         self.scroll.setWidgetResizable(True)
         self.scroll.setWidget(self.slide_label)
-
-        # 翻訳方向追加
         self.lang_box = QComboBox()
         self.lang_box.addItems(["日本語→英語", "英語→日本語"])
 
@@ -45,8 +40,8 @@ class PPTView(QMainWindow):
         left_layout.addWidget(self.open_in_app_btn)
         left_layout.addWidget(QLabel("表示PPT選択"))
         left_layout.addWidget(self.view_box)
-        left_layout.addWidget(QLabel("翻訳方向"))  # 追加
-        left_layout.addWidget(self.lang_box)       # 追加
+        left_layout.addWidget(QLabel("翻訳方向"))
+        left_layout.addWidget(self.lang_box)
 
         # 中央
         center_layout = QVBoxLayout()
@@ -70,3 +65,9 @@ class PPTView(QMainWindow):
         layout.addLayout(left_layout, 4)
         layout.addLayout(center_layout, 1)
         layout.addLayout(right_layout, 4)
+
+    def show_slide(self):
+        if not self.slides_pix:
+            return
+        pixmap = self.slides_pix[self.slide_index]
+        self.slide_label.setPixmap(pixmap)
